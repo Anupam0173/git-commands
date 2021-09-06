@@ -1,0 +1,182 @@
+sudo sysctl -w fs.inotify.max_user_watches=524288  =============>for deleting watcher
+
+
+how to create react app=============================>>npx create-react-app react-complete-guide
+====================================================>>npm start
+
+Imperative programming tells us how to do it, while Declarative programming tells us what we want to happen.
+
+ component is just that: ====>>A JS function that typically returns some HTML (or, to be precise: JSX) code which will be shown on the screen when that component is used. or A component is just a function in react.
+ 
+ props?
+ it is used in child class for accessing the parent property.whatever has been passed by parent.
+ What does JSX stand for?
+JavaScript XML====>>JSX is one of the examples of syntactic sugar in JavaScript.
+Syntactic sugar is syntax within a programming language that is designed to make things easier to read or to express.
+JSX allows us to write HTML in React.
+
+class--->className
+for----->htmlfor
+props.children?
+it is used to get the access of content whatever is written between starting and ending tag.
+In the child we can access it. by {props.child}
+
+
+usestate()?
+use state returns 2 things when we do destructuring. 1) name 2) method.  method is used for setting the value of name.
+
+
+fragments ?
+we cannot return more than one value via jsx code but with the help of fragment we can return multiple code or multiple tags.
+
+react protal ?
+in react portal to specify 2 args which are   1) kya render karna hai like(<h1>helllo</h1>) and 2) kaha render karna hai 
+name of other element.
+
+ref--->ref is used for gettting the value of any input.Refs provide a way to access DOM nodes or React elements.
+
+controlled components vs uncontrolled components?
+controlled------------>use of function.
+uncontrolled --------->ref.
+https://stackoverflow.com/questions/42522515/what-are-react-controlled-components-and-uncontrolled-components.
+
+
+useeffect in react js?
+it takes 2 arguments 1st is arrow function and 2 is list of dependencies .means our callback function will execute whenever the dependieces will change.
+
+
+useReducer?
+a single useReducer is capable to do the same task of multiple useState.
+useReducer also lets you optimize performance for components
+useReducer is used for bigger projects. reference from thapa technical.
+
+const [state, updateState] = useState();
+const [reducerState, dispatch] = useReducer(myReducerFunction);
+
+what is context.consumer===========>>Always accepts a function and accepts a parameter which is sent by provider.--------->by TP    https://www.youtube.com/watch?v=EynAnD8nDfc
+what is context?----------------->codevolution   or https://www.javatpoint.com/react-context(implementation).
+we need context because sending of variable staus from one component to other componnent directly is not possible.
+we can send via probs and function refernence but here we will have to pass our status data between all the components which exists in between sender and reciver of component. if we want to send data from 1st to 4th then we wil have to pass out data to 2 and 3rd also.
+means if 1st component wants to send the data to 5 th  componnent then we can do this by context.
+context is used for state mangagement across application wide. for this we make a seprate file.
+cont a=React.creatContext();
+
+usecontext()?	--------> by thapa technical  https://www.youtube.com/watch?v=us4pQzWRznQ
+use context is the replacement of context.consumer.
+
+
+limitation :
+we cannot use context if we want to update something several times in a second.For that Redux is there.
+context solves the problem of prop drellling.
+
+Hooks can not used in class component. all hooks start with use keyword.
+
+useRef and forwardRef by code step by step.
+useRef ?
+with the help of useref we can manipulate the input box like bringing the focus,changing the text color of input etc.
+example on a click of btn we can change any thing related to input field.
+https://www.geeksforgeeks.org/react-js-useref-hook/
+
+
+forwardRef?--->ForwardRef gives a child component a reference to a DOM entity created by its parent component in React.
+it is used when we want to pass the ref from parent component to child component. from the parent component to pass ref and in the child component we recieve it by forwardREf acctually it is wrapper.
+example--->btn and eventhandler function is present in parent component and input box is present in child component and forwardedRef is used in child component.
+
+
+How react works?
+for every state change entire component gets loaded.
+if a component is executed then all it's child and nested child will also get executed.
+
+ReactMemo()?===================>>props.show===props.privious.show
+if some change happens on parent component then automatic child component reevalution happens but But when we write reactMemo() then child evalution happens only if props changes. our child component with always compare props 
+instead
+of checking any changes in parent component.
+
+
+useCallback() ?
+usecallback prevents a function being called again again. usecallback(()=>{},[]) 1st agrs is callback funct and 2nd args is list of dependencies means we want to recreate the the variable whenever value of dependendies is changed.
+if we will not provide any dependencies then the function will not recreate itself.
+
+state scheduling -->in react state does not changes immideately instead of these it schedule the state change.
+
+
+useMemo()?
+The useMemo is a hook used in the functional component of react that returns a memoized value. 
+const listItems = useMemo(() => [5, 3, 1, 10, 9], []); 
+now this listitems will not be created automatically untill it updated.if we will not write useMemo then it will get crated automatically because it is the object.
+
+class component ?
+render()?
+where render method defines what need to be rendered. in earlier version we used to use class based component to manage the state.
+props.name---->this.props.name(in class component).
+in function based component state can be anything boolean,string,number but in the class based component state can be only object whose name must be state.
+setState() is used to set the state of class.
+
+
+Async\Await ?
+The keyword async before a function makes the function return a promise:
+The keyword await before a function makes the function wait for a promise:
+The await keyword can only be used inside an async function.
+
+
+custom hooks?
+it is a js function whose name start with 'use' keyword. A custom hook can use Another hook inside it. custom hooks are used for sharing the logic among component.
+it's use case is same as function means apply logic in only one place and reuse it anywhere as per our requirement.
+ref--->https://medium.com/@svsh227/create-and-use-the-custom-hook-in-react-app-from-scratch-74801aafb89d
+
+
+get input value by usestate vs ref
+if our requirement is to get the value at every key stroke then we should use usestate.
+if our requirement is to get the value only once then we should use ref.
+
+
+***********************************************redux?*By thapa technical*******************************************************
+https://www.youtube.com/watch?v=1oU_YGhT7ck
+
+
+state? ---------->state
+const initialState=0; 
+
+
+Action---->Either increment or decrement (i have to add or increment something).
+export const incNumber=()=>{
+    return {
+        type:"INCREMENT"
+    }
+}
+
+
+reducer--->takes 2 args where 1st args is initial state and 2nd args is action.   (How i have to add or increment something).
+rootreducer is used to combine all the reducers which are available.
+const initialState=0;
+const changeTheNumber=(state=initialState,action)=>
+{
+    switch(action.type)
+    {
+        case "INCREMENT": return state+1;
+        case "DECREMENT": return state-1;
+        default : return state;
+    }
+}
+
+store---->store[reducer[state]]     *********means store contains reducer and reducer contain state*********
+import {Provider} from "react-redux";           <Provider store={store}> <App/> </Provider> by this line we provide the store.
+
+create store by below method
+import {createStore} from 'redux';
+import rootReducer from './reducers/index';
+const store=createStore(rootReducer);
+
+
+dispatch?
+generally it is exeucted on eventHandler(onclick like) and we pass an action in dispatch method.
+
+import {useSelector,useDispatch} from 'react-redux';
+
+const mystate=useSelector((state)=>state.changeTheNumber);
+const dispatch=useDispatch();
+<a onClick={()=>dispatch(decNumber())} title="decrement">
+   <span>-</span>
+</a>
+<input type="text" value={mystate}></input>
+ 

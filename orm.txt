@@ -1,0 +1,149 @@
+sudo npm install -g npm
+Informational responses (100–199)
+Successful responses (200–299)
+Redirects (300–399)
+Client errors (400–499)
+Server errors (500–599)
+
+orm video link----------------------------->https://www.youtube.com/watch?v=3qlnR9hK-lQ
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+
+
+mysql port no:3306
+uname and pwd : root and Sharma@123
+Anupam root root
+
+cmd for starting the mysql database--------------------------------------------------------------->> sudo mysql -u root -p
+cmd for starting the mysql database--------------------------------------------------------------->> mysql -u root -p
+
+----------------------------------------------mysql stuff above-----------------------------------------------------------
+
+documentation---------------------------------------------------->https://sequelize.org/v4/manual/tutorial/migrations.html
+
+
+
+sudo npm install sequelize pg pg-hstore
+sudo npm install -g sequelize-cli 
+sequelize init
+npm init
+
+
+
+
+****************************************************ORM WITH SQL)************************************************
+npm install --save sequelize
+sudo npm install --save mysql2
+sudo npm install -g sequelize-cli 
+sequelize init   -------------------------------->creates all the files.
+npm init
+give username and password to config.json file
+for creating the db------------------------------------------------------------------>sequelize db:create
+----->there should not be any space between model and generate
+sequelize model:generate --name User --attributes name:string,email:string,role:string    
+sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+
+-----------------------app.js------------------>for creating the table in the database
+const {sequelize} = require('./models')
+async function main()
+{
+    await sequelize.sync()
+}
+main()
+
+----------------------------terminal---------------
+in cmd run node app.js
+
+
+
+---------------------------------------for renaming the table changing it's datatype----------------------
+tableName:'user',
+ name: { type:DataTypes.STRING, allowNull:false,},
+ email:  { type:DataTypes.STRING,allowNull:false,},
+ role:  {  type:DataTypes.STRING,allowNull:false,},
+ users.js
+ ---------------------terminal--------------
+ node app.js     or node app
+ 
+ 
+ 
+  npm install express
+ -----------------------------------------------post request in app.js file------------------------------------------
+
+const express = require('express')
+
+const { sequelize, User, Post } = require('./models')
+
+const app = express()
+app.use(express.json())
+
+app.post('/users', async (req, res) => {
+  const { name, email, role } = req.body
+
+  try {
+    const user = await User.create({ name, email, role })
+
+    return res.json(user)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json(err)
+  }
+})
+
+app.listen({ port: 5000 }, async () => {
+    console.log('Server up on http://localhost:5000')
+    await sequelize.sync()
+    console.log('Database Connected!')
+  })
+  
+  --------------------------------------api data-----------------------------------------------------
+  { "name":"anupam",
+    "email":"Anupam@gmail.com",
+    "role":"IOT trainee"
+  }
+  ---------------------------------------------------data end------------------------------------------------
+  
+  
+  ------------------------------editing the columns--------------------
+  await sequelize.sync({force:true})------------->problem with this approach is that our previous data will get lost.
+   uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    
+    
+    -------------------for solving ablove problem we use migration--------------------------------------------
+    dropping database------------------------------------------->sequelize db:drop
+    sequelize db:create
+    await sequelize.authenticate()
+  cmd=================sequelize db:migrate===================================
+  
+  
+  
+  
+  ------------------------------------creation of post table--------------------------------------------------
+  sequelize model:generate --name Post --attributes body:string       ---------->create 2 files post.js in migration and models folder.
+  sequelize db:migrate:status
+  sequelize db:migrate
+  
+  sequelize db:migrate undo       =====>>for reverting the latest migration.
+    
+    --------------------------------Agreegation----------------------------------------
+    
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    ============================seed=============================================================
+    Let's create a seed file which will add a demo user to our User table.
+creating seeds------------------------------------>sequelize seed:generate --name create-fake-users
+running seed------------------------------------->sequelize db:seed:all
+
+Undoing Seeds
+If you wish to undo most recent seed--------------------->sequelize db:seed:undo
+If you wish to undo all seeds--------------------------->sequelize db:seed:undo:all
+
