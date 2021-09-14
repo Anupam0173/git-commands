@@ -1,5 +1,5 @@
 git config --global user.name "Anupam0173"
-git config --global user.email "anupam.kushwaha@thinkitive.com"
+git config --global user.email "mygmailId"
 
 git init  ------------------> to start a new project.
 git config -l   ---------------> for checking the configurations.
@@ -55,7 +55,7 @@ pull is the shortcut of fetch and master.
 
 
 *******************************How to access our token***********************************
-go to our reporsity>>click on profile>>setting>>developer setting>>personal access token>>Generate new token>>tick all boxes>>copy our token>> #$fal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tu34
+go to our reporsity>>click on profile>>setting>>developer setting>>personal access token>>Generate new token>>tick all boxes>>copy our token>> then we will get our token
 
 
 …or create a new repository on the command line
