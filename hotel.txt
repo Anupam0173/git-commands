@@ -1,0 +1,42 @@
+--------------------------------------------hotel -------------------------------------------
+
+npm init					---------------->for Generating package.json file.
+npm install express --save			----------------->Most popular framework and it generates node_modules in our project
+npm install ejs --save				----------------->template engine
+npm install body-parser --save               ------------------>node js middleware,used for geting the body data in express.js
+
+npm install nodemon				---------------->enable the changes automatically 
+var path=require('path');            ---------------------->Extract the filename from a file path:
+The Path module provides a way of working with directories and file paths.
+
+npm install mongoose --save			---------------->used for db connectivity with node js
+npm uninstall mongoose
+npm i mongoose@5.7.0
+
+npm install multer	    //for working with media files
+npm i validator           //for applying validation
+
+
+---------------------populate()----------------------method available in mongoose
+populate is there inplace of foreign key and primary key.
+
+---------------------lookup----------------------method available in mongo db
+db.books.aggregate([{$lookup:{from: 'authors',localField:'authors',foreignField:"_id", as:'creators'}}])
+
+
+moongoose.Schema.Types.ObjectId()
+---------------------query params vs path variable which is considered in best practice----------------------------------
+Query Parameter-------------------------->127.0.0.1:8000/users?id=123                 # Fetch a user who has id of 123 
+Path Variable----------------------------->127.0.0.1:8000/users/123                    # Fetch a user who has id 123
+
+
+db.books.insertOne({name: 'My favorite Book',authors:[ObjectId("612b62742c5f742ec6c8afb3"),ObjectId("612b62742c5f742ec6c8afb4")]})
+db.books.aggregate([$lookup:{from:'authors',localfield:'authors',foreignField:"_id",as :'creater'}}])
+
+
+mongoose()---------------------------->odm (object doucment mapper) it is just like orm in django.mongoose is  a framework which is used for dealing with database.
+
+
+multer for image and sharp for resizing of image.
+
+npx kill-port 3003

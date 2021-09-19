@@ -1,0 +1,146 @@
+Informational responses (100–199)
+Successful responses (200–299)
+Redirects (300–399)
+Client errors (400–499)
+Server errors (500–599)
+
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+
+Sharma@123 <----- password
+mysql port no:3306
+uname and pwd : root and Sharma@123
+Anupam root root
+
+cmd for starting the mysql database--------------------------------------------------------------->> sudo mysql -u root -p
+cmd for starting the mysql database--------------------------------------------------------------->> mysql -u root -p
+sudo dpkg -i mysql-workbench-community-dbgsym_8.0.26-1ubuntu20.04_amd64.deb 
+sudo dpkg -i ~/Downloads/mysql-workbench-community-dbgsym_8.0.26-1ubuntu20.04_amd64.deb
+
+
+-- SQL for creating the coffee_store database
+
+CREATE TABLE products (
+
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(30),
+	price DECIMAL(3,2),
+	coffee_origin VARCHAR(30)
+);
+
+CREATE TABLE customers (
+
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	first_name VARCHAR(30),
+	last_name VARCHAR(30),
+	gender ENUM('M','F'),
+	phone_number VARCHAR(11)
+);
+
+CREATE TABLE orders (
+
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	product_id INT,
+	customer_id INT,
+	order_time DATETIME,
+	FOREIGN KEY (product_id) REFERENCES products(id),
+	FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+
+
+
+
+
+
+
+USE test; 
+
+-- 1. Add a primary key to the id fields in the pets and people tables.
+
+ALTER TABLE people
+ADD PRIMARY KEY (id);
+
+DESCRIBE pets;
+DESCRIBE people;
+
+-- 2. Add a foreign key to the owner_id field in the pets table referencing the id field 
+-- in the people table. 
+
+ALTER TABLE pets 
+ADD CONSTRAINT FK_PetsOwner 
+FOREIGN KEY (owner_id) REFERENCES people(id);
+
+-- 3. Add a column named email to the people table. 
+
+ALTER TABLE people
+ADD COLUMN email VARCHAR(20);
+
+-- 4. Add a unique constraint to the email column in the people table.
+
+ALTER TABLE people
+ADD CONSTRAINT u_email UNIQUE (email);
+
+
+
+-- 5. Rename the name column in the pets table to ‘first_name’.
+
+ALTER TABLE pets CHANGE `name` `first_name` VARCHAR(20);
+
+-- 6. Change the postcode data type to CHAR(7) in the addresses table.
+
+ALTER TABLE addresses MODIFY postcode CHAR(7);
+
+DESCRIBE addresses;
+
+
+select * from students where name is null;
+
+
+
+
+1nf
+means no duplicate rows and each column must have single value.
+
+
+
+2nf 
+means should only be dependent on the primary key
+
+
+3nf
+means should not be derived from any other attribute except primary key.
+or
+non-primary key should only be depended on the primay key. it should not depend on any other values;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+
+3rd solution not implemented.
+
+
+------------how to use mysql as a database------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Ecommerce',
+        'USER': 'root',
+        'PASSWORD': 'Sharma@123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
+
+pip install pymysql
+Then, edit the __init__.py file in your project origin dir(the same as settings.py)
+
+add:
+
+import pymysql
+
+pymysql.install_as_MySQLdb()
+
+
+------------------database connectivity end---------------

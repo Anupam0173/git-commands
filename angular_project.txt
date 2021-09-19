@@ -1,0 +1,4 @@
+how to bring our content on hole page.------------------->use routing for that.
+how to define the our model for that complex data.
+
+do we have the need to register our model also.

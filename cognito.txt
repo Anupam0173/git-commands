@@ -1,0 +1,65 @@
+ashwin  --------------->501a8654afe9hk9pln11q3643
+localhost8959199
+
+http://localhost:4200/loggedin    ---->call back uri
+
+http://localhost:4200/logout     ----->signout uri
+
+https://localhost8959199.auth.us-east-2.amazoncognito.com/login?client_id=501a8654afe9hk9pln11q3643&response_type=code&scope=email+openid&redirect_uri=http://localhost:4200/loggedin
+
+
+
+https://localhost8959199.auth.us-east-2.amazoncognito.com/login?client_id=501a8654afe9hk9pln11q3643&response_type=code&scope=email+openid&redirect_uri=http://localhost:4200/loggedin
+
+
+
+
+1neiubnnehj1f450nr0esqqbgp  ---->client id
+1neiubnnehj1f450nr0esqqbgp
+
+
+------------------------------------url configurations-------------------------------------------------
+login.component.html
+<!-- <a routerLink='loggedin'>Login</a> -->
+ <a href='https://localhost8959199.auth.us-east-2.amazoncognito.com/login?client_id=1neiubnnehj1f450nr0esqqbgp&response_type=code&scope=email+openid&redirect_uri=http://localhost:4200/loggedin'>LogIN</a>
+ 
+ 
+ loggedin.component.html
+ <!-- <a routerLink='/logout'>Logout</a> -->
+<a href='https://localhost8959199.auth.us-east-2.amazoncognito.com/logout?client_id=1neiubnnehj1f450nr0esqqbgp&logout_uri=http://localhost:4200/logout'>Logout btn</a>
+
+
+In General settings there is an option for deleting the pool.
+
+912941323025-vu2c1q4vtmq5mlhigbku5vjaellaitdr.apps.googleusercontent.com     --------->Your client id
+xmhOGK7ogpxYbUejJLoU4YNF   ----->your client secret
+
+
+
+-------------------------------------------------- aws cognito Using amplify -----------------------------------------------------------
+
+https://docs.amplify.aws/lib/auth/getting-started/q/platform/js/#option-1-use-pre-built-ui-components   ---->amplify official Link
+
+
+https://github.com/jspruance/aws-cognito-tutorial-complete   -----> amplify github link
+
+https://www.youtube.com/watch?v=EaDMG4amEfk   ------>git hub link youtube
+
+
+https://aws.amazon.com/premiumsupport/knowledge-center/cognito-google-social-identity-provider/  -----> google app id for google authentications
+
+  //  "invokeUrl": "https://5bltcq602h.execute-api.us-west-2.amazonaws.com/prod",
+
+npm i aws-amplify   --->for install amplify
+
+npm run start    -------->for running the react app
+
+app-client-name  -----------> HexalClient
+
+
+   "invokeUrl": "https://d6ahayhx67.execute-api.us-east-2.amazonaws.com/prod"
+   
+   "invokeUrl": "https://5bltcq602h.execute-api.us-west-2.amazonaws.com/prod"    <---my 
+   
+   
+   https://www.youtube.com/watch?v=r1P_glQGvfo  

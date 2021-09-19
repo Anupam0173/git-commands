@@ -1,0 +1,145 @@
+sudo apt install python3
+
+sudo apt install python3-pip
+
+djangoenv is the name of our virtual env
+source djangoenv/bin/activate    --------------->Activation of virtualenv   //how to crate virtual envirnment in django by javatpoint
+
+pip install virtualenv    //for installing virtual env
+virtualenv <virtualenv_name>
+
+. <my_env_name>/bin/activate   //cmd for activating virtual envirnment
+. venv/bin/activate
+
+python3   ---->for seeing the version 
+
+python3 -m pip install Django
+
+djanog-admin --->for verifying
+
+if multiple routes are there then django will match with it's first route and if first route doesn't match then only it will go for second url to match.
+urlpatterns = [
+    path('<int:day>/', views.monthly_challenge_byNumeber),
+    path('<str:month>/', views.monthly_challenge),
+]
+
+
+
+  return HttpResponseRedirect("/challenge/" + redirect_month)  --->means match this url from starting
+  return HttpResponseRedirect("challenge/" + redirect_month)  --->means append in the current url
+  
+  # if we are using templates files(like .html) inside the app then we don't need to any setting inside the settings.py.
+---------------------  how to use templates in project level-------------------------------------
+  import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+Specify this TEMPLATE_DIR inside settings.py as follows
+TEMPLATES = [
+{
+...,
+'DIRS': [TEMPLATE_DIR,],      //on project level we define base.html 
+},]
+  
+  # if we are using static files(like image,css) inside the app then we don't need to any setting inside the settings.py.
+  -------------how to use static files in project level----------------------
+STATIC_DIR=os.path.join(BASE_DIR,'static')
+..
+STATIC_URL = '/static/'
+STATICFILES_DIRS=[
+STATIC_DIR,
+]   
+
+make migration command is run from main project
+
+python3 manage.py shell         ----->for working with shell and to view our database data
+
+books.objects.get()    ---->in case of multiple response it will give error.
+books.objects.filter()  -------> in case of multiple response it will not give error.
+we should use filter() if our query may return multiple value.
+
+
+related_name and modelclassname_set is used to make a relation between parent and child class.
+foreign key ----->is used for one to many relationship.
+OneToOneField() ---->is used for one to one relationship
+
+in ModelForm we can call save method directly on object.
+in normal form (formsForm) we can we will have to instanctiante an model object then only we can save it.
+
+
+how to pass the id from urls.py to views.py in django: (video no 156 of udemy).
+def get_Context_data(self,**kwargs):
+	review_id=kwargs['id']
+	
+	
+in the listView we can return data by applying some filteration of all data:
+def get_quetyset(self):
+	base_query=super().get_queryset();
+	data=base_query.filter(id_gt=4)
+	return data      //now the data which we are returning that contains only those rows where id is greater than 4.
+	
+
+python3 -m pip install pillow
+
+HttpResponseRedirect vs redirect 
+
+cleaned_data[''] is available in 41 page no.
+class YourForm(forms.Form):
+	if request.method == "POST":
+	    form = YourForm(request.POST)   or  form = BlogForm(request.POST,request.FILES)   //if our data contains files then only
+	    if form.is_valid():
+		cleaned_test = form.cleaned_data["test"]
+        
+        
+        
+query property – This property is used to get sql query of query set.
+
+
+******************working with image field**************
+----------------in models.py---------------------
+    hotel_Main_Img = models.ImageField(upload_to='images/')
+    
+product.image is = shop/images/Screenshot_from_2021-08-27_01-56-05.png
+product.image.url = /media/shop/images/Screenshot_from_2021-08-27_01-56-05.png
+    
+--------------------in settings.py--------------------------
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'       //this line is required so that browser can read this image.
+
+
+----------------in project urls--------
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('register', views.hotel_image_view, name='hotel_image_view'),
+    path('hotel_images', views.display_hotel_images, name='hotel_images'),
+    path('success', views.success, name='success'),
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)     //this line is required
+
+
+#many to many relationship in django
+https://www.geeksforgeeks.org/python-relational-fields-in-django-models/
+
+
+{% load static %} is added after the after the {% extends base.html %} tag.
+
+{{name|capfirst}}   //here capfirst is the filter.
+
+https://inloop.github.io/sqlite-viewer/             --->for viewing sqllite database content.
+
+How to change django admin text search it ============>> for the changing the django admin text like django administration
+
+admin.site.register is called  ==========>>how to register your model
+
+proper way to register our app in our project
+INSTALLED_APPS = [
+...
+'todos.apps.TodosConfig',
+...
+]
+
+
+for any doubt search ====>>making queries in django
+
+
+<i class="fa fa-shopping-cart">
+
+

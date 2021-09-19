@@ -1,0 +1,662 @@
+sudo sysctl -w fs.inotify.max_user_watches=524288  =============>for deleting watcher
+officail doucmentation---------------------->https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+sudo service mongod stop
+sudo apt-get purge mongodb-org*
+sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb
+
+installtion link------------------>>>https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04
+
+mongo db?
+mongo db is schemaless db.so it is flexible database.
+
+
+sudo apt-get install mongodb
+
+sudo apt-get update
+cmd for robomongo================================================================>sudo snap install robo3t-snap
+sudo service mongodb start
+sudo service mongodb status
+sudo service mongodb stop
+
+
+sudo dpkg -l | grep mongo*
+sudo apt-get remove mongodb* --purge
+sudo apt purge mongo-tools
+
+
+for starting the mongodb=============================================================>mongo   or mongod   or sudo mongod
+for running the test file============================================================npm run test            or npm run start
+******************************************************************************************
+for changing port====================================================================>>sudo mongod --port 27018
+once we changed the port then we will have to connect by this=========================>>mongo --port 27018
+**********************************************************************************************
+show dbs;
+use mydb;   //for creating the data bases
+
+
+use shop
+INSERT******************************************insertOne(),insertMany()
+Insert One Row/Documents(BSON)
+db.comments.insert({
+    'name': 'Harry',
+    'lang': 'JavaScript',
+    'member_since': 5
+ })
+db.products.insertOne({name:"A BOOK",price:299});
+
+
+
+Insert many Rows/Documents(BSON)
+db.comments.insertMany([{
+    'name': 'Harry',
+    'lang': 'JavaScript',
+    'member_since': 5
+    }, 
+    {'name': 'Rohan',
+    'lang': 'Python',
+    'member_since': 3
+    },
+    {'name': 'Lovish',
+    'lang': 'Java',
+    'member_since': 4
+}])
+
+
+FIND*************************************find,findOne
+Find--------------------------->find gives cursor and findone give element
+db.products.find()===========>give us cursor not the element itself.
+db.products.find().toArray()========================>for getting all the values. or we can use foreach loop
+db.comments.find().pretty()
+db.comments.findOne({name: 'Harry'})=============>Find the first row matching the object
+db.flightData.find({distance:{$gt:90}}).pretty()======>we cannot use pretty() with findOne method because pretty method is available in cursor not on element.
+
+Update a row/Doucment(BSON)*********************updateOne,updateMany,replace,replaceOne
+db.flightData.updateOne({distance:12000},{$set:{marker:"delete"}})
+db.comments.update({name: 'Rohan'},
+{$inc:{
+    member_since: 2
+}})
+
+db.comments.update({name: 'Rohan'},
+{$rename:{
+    member_since: 'member'
+}})
+
+
+update Many
+db.flightData.updateMany({},{$set:{owner:"Anupam"}})----------->it will add the data to every field.
+
+update vs udatemany
+modifies only one document matching the specified filter. However, you can make it modify all the documents by adding the modifier {multi: true} . updateMany on the other hand, modifies all the documents matching a specified filter.
+
+
+DElETE***************************************deleteMany,deleteOne
+db.comments.remove({name: 'Harry'})
+db.flightData.deleteMany({"marker":"toDelete"})
+data can be deleted by delete method and remove method both but the main difference is in the value which they return.
+
+projection*****************************{} is used for selecting everything.
+projection is used to limit the set of fields which we retrieve.
+projection means selecting only the necessary data rather than selecting whole of the data of a document.
+syntax============>>>db.COLLECTION_NAME.find({},{KEY:1})   eg:==========>>db.mycol.find({},{"title":1,_id:0})
+
+example of emebedded data
+db.flightData.updateMany({},{$set:{status:{description:"on-time",last_update:"1 hour ago"}}})
+{
+	"_id" : ObjectId("6123948adc8e2ee12000a092"),
+	"departureAirport" : "MUC",
+	"arrivalAirport" : "SFO",
+	"aircraft" : "Airbus A380",
+	"distance" : 12000,
+	"intercontinental" : true,
+	"status" : {
+		"description" : "on-time",
+		"last_update" : "1 hour ago"
+	},
+}
+
+
+example of array
+db.flightData.updateMany({},{$set:{facilities:["seat","Ac"]}})
+{
+	"_id" : ObjectId("6123948adc8e2ee12000a092"),
+	"departureAirport" : "MUC",
+	"arrivalAirport" : "SFO",
+	"aircraft" : "Airbus A380",
+	"distance" : 12000,
+	"intercontinental" : true,
+	"status" : {
+		"description" : "on-time",
+		"last_update" : "1 hour ago"
+	},
+	"facilities" : [
+		"seat",
+		"Ac"
+	]
+}
+
+
+Accessing structured data***************************************************
+db.flightData.find().pretty()
+db.flightData.findOne({departureAirport: "MUC"}).facilities
+db.flightData.find({"status.last_update":"1 hour ago"}).pretty()
+
+________________________________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________________________________|
+--------------------get the statistics of database--------------------------
+db.stats()
+
+---------------getting the datatype----------------
+> db.numbers.insertOne({a: 1.5,b: "r"})
+> typeof db.numbers.findOne({b: "r"}).a
+number
+
+*********************************shell vs drivers**************************************************
+shell: shell provide us an user interface for interacting with the database.
+drivers: driver provides the connectivity between the database and backend programming language.
+
+
+--------------------------Joining with $lookup--------------------
+> use bookStore
+switched to db bookStore
+> cls
+db.authors.insertMany([{name: 'Max Scwarz',age: 29, address:{street: 'Main'}},{name: 'Manuel Lor',age: 30, address:{street: 'Tree'}}])
+db.books.insertOne({name: 'My favorite Book',authors:[ObjectId("5f145a7c231893e15e9e53fe"),ObjectId("5f145a7c231893e15e9e53ff")]})
+*******************************main******************************
+db.books.aggregate([{$lookup:{from: 'authors',localField:'authors',foreignField:"_id", as:'creators'}}]).pretty()
+
+
+run from the outside of shell------------------------------------------------------------------->mongod --help
+for changing the db path----------------------------------------------------------------->sudo mongod --dbpath /type/our/path
+for changing the db path---------------------------------------->sudo mongod --dbpath /type/our/path --logpath /type/our/path
+running via config file ----------------------------------------------------------------->sudo mongod -f /type/our/path
+
+
+-----------------------working with order insert--------------------------------
+insert() --> insert also exist one many document.But it's  not recommended to use it anymore - it also does not return the inserted id's. 
+
+1. By default, when using insertMany(), inserts are ordered, that means, that the inserting process stops if an error occurs.
+2. Can changes this by switching to 'unordered inserts' - inserting process will then continue, even if errors occurred.
+3. In both cases, no successful inserts (before the error) will be rolled back.
+4. Successful insert will not roll back.
+> db.hobbies.insertMany([{_id: 'yago', name: 'Yoga'},{_id:'cooking',name:'Cooking'},{_id:'hiking',name:'Hiking'}],{ordered: false})
+after the above command all the query will run even if middle one query contains the error.
+
+***********************************************writeConcern: {w: 1}*************************************************
+> db.persons.insertOne({name: 'Chrissy', age: 44},{ writeConcern: {w: 0} })
+data is stored but acknowledged is false.You sent the request but you don't know if it reached the server.If any network connections issue create. W:0 is super fast but obviously, it tells you nothing about whether this succeed or not.
+
+// write : the default is true
+> db.persons.insertOne({name: 'Alex', age: 35},{writeConcern: {w: 1}})
+
+============================================== journal : default is false or undefined======================
+> db.persons.insertOne({name: 'Michel', age: 35},{writeConcern: {w: 1, j: false}})
+if journal is false then it could be liitle bit faster
+
+> db.persons.insertOne({name: 'Michel', age: 35},{writeConcern: {w: 1, j: true}})
+// if journal is true then it could be little bit slower
+===========================================wtimeout======================================
+ db.persons.insertOne({name: 'Aliya', age: 35},{writeConcern: {w: 1, j: true,wtimeout: 200}})
+
+> db.persons.insertOne({name: 'Aliya', age: 35},{writeConcern: {w: 1, j: true,wtimeout: 1}})
+// it super fast
+// cause an issue if network connection is slow
+
+
+--------------------------Atomicity-------------------------
+## The Atomicity guarantees that either transaction  succeeds as a whole or it fails as a whole.
+1. Operation (e.g. insertOne()) --> Error --> Rolled Back(i.e NOTHING is saved)
+2. Operation (e.g. insertOne()) --> Success --> Saved as Whole
+## MongoDB CRUD operation are Atomic on the Document Level(including Embedded Documents).
+
+
+-------------------------Importing Data-------------------------
+mongoimport tv-shows.json -d movieData -c movies --jsonArray --drop       
+where -d for database and -c for collections  and --jsonArray specifies that we are going to get the jsonArray as input.
+
+drop ->drop the db if it already exists.
+
+
+
+*******************************************find vs findone()*****************************
+findone() filters only the result which meets the criteria.
+find() filter all the result which meets the criteria.
+> db.movies.find({runtime: 60}).pretty()
+> db.movies.findOne({runtime: 60})
+
+
+
+---------------------- 1.Comparison------------------------------
+
+$ne, $eq, $lt, $lte, $gt, $gte, $in, $nin
+// exactly the same 
+>db.movies.findOne({runtime: {$eq: 60}})
+
+> db.movies.find({runtime: {$ne: 60}}).pretty()   //not equal
+> db.movies.find({runtime: {$lt: 40}}).pretty()
+> db.movies.find({runtime: {$lte: 40}}).pretty()
+> db.movies.find({runtime: {$gt: 40}}).pretty()
+> db.movies.find({runtime: {$gte: 40}}).pretty()    //greater than equal to
+
+
+
+
+// query into imbedded documents
+N.B : In imbedded documents have to use must quotes
+
+> db.movies.find({"rating.average": {$gt: 7}}).pretty()
+
+// query into imbedded array
+> db.movies.find({genres:"Drama"}).pretty()   ============>>menas Drama should be there in array
+// to exact query
+> db.movies.find({genres:["Drama"]}).pretty()	================>>means only Drama should be there in array
+
+******************in vs nin************************
+[30,42] --> this is set of values not a range
+> db.movies.find({runtime: {$in:[30,42]}}).pretty()
+> db.movies.find({runtime: {$nin:[30,42]}}).pretty()
+
+
+------------------------ 2.Logical--------------------------
+
+$or, $and, $not, $nor
+
+// multiple query
+> db.movies.find({$or: [{"rating.average": {$lt: 5}},{"rating.average": {$gt: 9.3}}]}).count()
+> db.movies.find({$nor: [{"rating.average": {$lt: 5}},{"rating.average": {$gt: 9.3}}]}).count()
+
+  ***********************and*************************
+  // this basically not work, does not give right value
+// same object is not permitted int this way
+// here issue is create by same json key genres, this keys value replace the first one when execute second
+
+> db.movies.find({genres : "Drama", genres: 'Horror'}).count()
+
+// this also have same result
+> db.movies.find({genres: 'Horror'}).count()
+
+// we have to use and in the same field
+// in this issue we have to use $and must
+> db.movies.find({$and: [{genres : "Drama"}, {genres: 'Horror'}]}).count()
+
+*******************************not***********
+> db.movies.find({runtime: {$not :{$eq: 60}}}).count()
+// this is also equal to the $ne
+> db.movies.find({runtime: {$ne: 60}}).count()
+
+
+***********************exists**********************
+db.users.find({age: {$exists: true}}).pretty()
+
+// checking exists and value not equal null
+> db.users.find({age: {$exists: true, $ne: null}}).pretty()
+
+*********************type***********
+// checking with alias
+> db.users.find({phone: {$type: 'number'}}).pretty()
+
+
+// also can add multiple type
+> db.users.find({phone: {$type: ['double','string']}}).pretty()
+
+
+
+*******************************regex*********************************
+// $regex allows us search for text
+
+// return the document that found the word
+// it is not  best way to find text in this way
+> db.movies.find({summary: {$regex: /musical/}}).pretty()
+
+
+***************************expr***************************
+$expr --> compare two fields inside one document then return that fields
+// we have to use double quotes in to query, have to pass reference fields name
+// have to use dollar sign before fields also
+
+// this work successfully
+> db.sales.find({$expr: {$gt: ['$volume', '$target']}}).pretty()
+
+
+------------------------5.Array-------------------------
+// act an embedded document
+// this is path embedded approach not only on a directly embedded documents
+// this is similar to multiple embedded documents query
+db.users.find({'hobbies.title': 'Sports'}).pretty()
+
+
+
+**************size**********************used on array********************
+## want to find all users who have exactly 3 hobbies
+> db.users.insertOne({name: 'Chris', hobbies: ['Sports', 'Cooking', 'Hiking']})
+> db.users.find({'hobbies': {$size: 3}}).pretty()
+
+
+// $all basically find if array have all fields like 'action', 'thriller'
+> db.moviestarts.find({genre: {$all: ['action', 'thriller']}}).pretty()   ------>means these both value should be present in any order.
+
+
+*******************************sort********************************
+// fetching data with sort()
+// one means ascending
+> db.movies.find().sort({'rating.average': 1}).pretty()
+
+// minus one mean descending
+> db.movies.find().sort({'rating.average': -1}).pretty()
+
+
+// sort with multiple query
+// here first sort the 'rating.average' and if 'rating.average' have same value into particular indexes and then runtime execute with descending if may exist
+> db.movies.find().sort({'rating.average': 1, runtime: -1}).pretty()
+
+
+
+*****************************skip and limit*************************************
+// we can skip certain amount of elements
+// it effective in pagination
+// when we work with pagination we can skip the previous 10 elements
+> db.movies.find().sort({'rating.average': 1, runtime: -1}).skip(10).pretty()
+
+// limit return the exact number of element
+> db.movies.find().sort({'rating.average': 1,runtime: -1}).skip(100).limit(10).pretty()
+
+// here order does not matter.
+// Order check from right such(previousexample) : sort()->skip()->limit()
+// what method we write first, it execute first
+
+
+
+------------------Using Projection to Share our Results---------------------
+
+## want to retrieve elements with specific fields
+// here ID always include
+> db.movies.find({}, {name: 1, genres: 1, runtime: 1, rating: 1}).pretty()
+
+// to exclude the ID
+> db.movies.find({}, {name: 1, genres: 1, runtime: 1, rating: 1, _id: 0}).pretty()
+
+
+----------------------Projection Slice--------------------
+
+// slicing array that i want
+// can add any number
+// $slice: 2 --> how many array elements we want to show from first
+> db.movies.find({'rating.average':{$gt: 9}}, {genres: {$slice: 2}, name: 1}).pretty()     ====>>here genres is the array from which we need only 2 element
+
+
+// can also be execute with array from
+// 1--> What lengths of elements we want to skip (index - start from 1)
+// 2--> How many element we want to show
+> db.movies.find({'rating.average':{$gt: 9}}, {genres: {$slice: [1, 2]}, name: 1}).pretty()
+// checking
+
+
+---------------------1. Document Updating Operator-----------------------
+
+$min, $max, $mul, $inc, $set, $unset
+
+// $set basically add a new value or update existing value
+// update the users whose hobby is Sports
+> db.users.updateMany({'hobbies.title': 'Sports'}, {$set: {isSporty: true}})
+
+
+// adding multiple elements using $set
+> db.users.updateOne({_id: ObjectId("5f17c3d47122dce4fa46fb4a")}, {$set: {age: 40, phone: 082344289399}})
+
+// can manually increment or decrement any number document
+> db.users.updateOne({name: "Manuel"}, {$inc: {age: 2}})
+> db.users.updateOne({name: "Manuel"}, {$inc: {age: -2}})
+
+// also check with multiple query
+> db.users.updateOne({name: "Manuel"}, {$inc: {age: -2}, $set:{isSporty: false}})
+
+// two operations is not allowed into same fields.  //bcz here we are update and setting both.
+> db.users.updateOne({name: "Manuel"}, {$inc: {age: -2}, $set:{age: 30}})
+
+// update the age value with min value
+> db.users.updateOne({name: "Chris"}, {$min: {age: 35}})   //it will work only if the current min value is smaller than previous value.
+> db.users.updateOne({name: "Chris"}, {$max: {age: 39}})   //it will work only if the current value is greater than previous value.
+
+// multiply age by a number specify 10 %
+> db.users.updateOne({name: "Chris"}, {$mul: {age: 1.1}})
+
+// to get red of fields
+> db.users.updateMany({isSporty: true}, {$unset: {phone: null}})   ----->it will not delete column it will just set it to null.
+
+> db.users.updateMany({isSporty: true}, {$unset: {phone: ''}})    ----->it will delete column.
+
+// Renaming Fields
+> db.users.updateMany({}, {$rename: {age: 'totalAge'}})
+
+************************************upsert**********upsert dafault vaiue is==false**********************
+## want to update some fields but does not know if its exist or not.
+// if it is exist then override the document
+// if it does not exist then create new document 
+
+> db.users.updateOne({name: 'Maria'}, {$set: {age: 29, hobbies: [{title: 'Good food', frequency: 3}], isSporty: true}}, {upsert: true})
+// this works perfectly
+
+// updating hole matched array elements
+// here .$ -> this will automatically refer to the element in our filter  as i want to update the element in hobbies which matched the condition
+// $--> dollar sign is a place holder here
+// adding new field inside the array
+> db.users.updateMany({hobbies: {$elemMatch: {title: 'Sports',frequency: {$gte:3}}}}, {$set : {"hobbies.$.highFrequency": true}})
+
+
+
+## lets say if totalAge is greater than 30 than we want to update the every array elements do not override
+// .$[] --> update all array elements and for each element because we have embedded document.
+> db.users.updateMany({totalAge: {$gt: 30}}, {$inc: {'hobbies.$[].frequency': -1}})   //all array element has been decreased by 1.
+
+
+*************************push**********************************************
+// Adding Elements to Arrays
+// taking also old array
+> db.users.updateOne({name: 'Maria'}, {$push: {hobbies: {title: 'Sports', frequency: 2}}})
+
+// $push also used with more than one document 
+// also use $sort, $sort is related with every $each
+> db.users.updateOne({name: 'Maria'}, {$push: {hobbies: {$each: [{title: 'Good Wine', frequency: 1}, {title: 'Good Wine', frequency: 2}], $sort: {frequency: -1}}}})
+
+
+**************************removing***********************************
+// Removing Elements from array
+// $pull describe an object that what we want to pull
+> db.users.updateOne({name: 'Maria'}, {$pull: {hobbies: {title: 'Hiking'}}})
+
+// Remove the last element of an array
+> db.users.updateOne({name: 'Chris'}, {$pop: {hobbies: 1}})
+
+// Remove the first element of an array 
+> db.users.updateOne({name: 'Chris'}, {$pop: {hobbies: -1}})
+
+
+// Understanding $addToSet
+// $addToSet adds unique value only
+// its basically add new element.But if the element already exist(have to exact same) it does not update.
+> db.users.updateOne({name: 'Maria'}, {$addToSet: {hobbies: {title: 'Hiking', frequency: 2}}})
+
+
+
+-------------------------Delete--------------------------
+Deleting a specific record which matches the criteria
+> db.users.deleteOne({name: 'Chris'})
+
+// delete with matched query
+> db.users.deleteOne({totalAge: {$gt: 30}, isSporty: true})
+
+> db.users.deleteOne({totalAge: {$exists: false}, isSporty: true})
+
+// delete many
+> db.users.deleteMany({totalAge: {$gt: 30}, isSporty: true})
+
+// deleting all entries in a collection
+// {} --> this is simply is a filter that matches every document in the collection.
+> db.users.deleteMany({})
+
+// to delete the entire collection
+> db.users.drop()
+
+// to delete the entire dataBase
+> db.dropDataBase()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for automatic running===============================================>>"test": "nodemon --exec 'mocha -R min'"
+
+npm init
+npm install --save mocha nodemon mongoose
+
+
+// connection to database
+mongoose.connect('mongodb://localhost:27017/crud');
+
+
+node filename.js    //for running the program of mongodb
+
+
+win+r for refreshing
+
+promise library========>>bluebird q Es5promise
+
+
+What is virtual in schema?
+In Mongoose, a virtual is a property that is not stored in MongoDB. 
+Virtuals are typically used for computed properties on documents.
+
+
+What are embedded documents in MongoDB?  or sub document?
+An embedded, or nested, MongoDB Document is a normal document that's nested inside another document within a MongoDB collection. 
+Embedded documents are particularly useful when a one-to-many relationship exists between documents.
+
+
+************************************************uber_muber************************************************************nodemon index.js
+
+http://127.0.0.1:3050/api/drivers=================================>>post req
+{
+    "email":"abc@gmail.com",
+    "driving":true
+}
+
+{
+      "email": "1driver@test.com",
+      "geometry": { "type": "Point", "coordinates": [-122.4759902, 47.6147628] }
+}
+
+
+http://127.0.0.1:3050/api/drivers/61150abb36bb8b5dbc1ce592==============================>>delete
+61150abb36bb8b5dbc1ce592
+
+
+
+
+http://127.0.0.1:3050/api/drivers/61150a0b36bb8b5dbc1ce590===============================>put
+{
+    "email":"driver1@gmail.com",
+    "driving":true
+}
+
+
+https://mongoosejs.com/docs/search.html?q=geoNear
+Marshmello
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://127.0.0.1:3050/api/drivers?lng=-80&lat=25
+http://127.0.0.1:3050/api/drivers?lng=-80&lat=25
+

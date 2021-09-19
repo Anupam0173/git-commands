@@ -1,0 +1,57 @@
+npm i mongoose@5.7.0
+
+
+Get Request:
+127.0.0.1:3000/api/contacts
+
+Post request:
+127.0.0.1:3000/api/contact
+{
+     "first_name":"rohit",
+            "last_name":"sharma",
+            "phone":"8989890987"
+}
+
+
+delete request
+127.0.0.1:3000/api/contact/610fcaac026ca95010086bbc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GET REQUEST:
+
+http://127.0.0.1:3000/api/todos/anil
+http://127.0.0.1:3000/api/todo/610aba197964cbaea7d8fe84
+
+
+
+
+POST REQUEST:
+http://localhost:3000/api/todo/
+{
+username:"test"
+todo:"bag"
+isDone:false
+hasAttachment:false}
+
+
+DELETE REQUEST:
+http://localhost:3000/api/todo/
+{
+     "id": "610ab8e5f392b8abe8e47a6b"
+           }

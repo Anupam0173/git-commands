@@ -1,0 +1,85 @@
+git config --global user.name "Anupam0173"
+git config --global user.email "anupam.kushwaha@thinkitive.com"
+
+git init  ------------------> to start a new project.
+git config -l   ---------------> for checking the configurations.
+
+
+git add .
+git commit -m "this is my first commit"
+git status  -------------------->that is used to check what we have to commit and what is left.
+git checkout <commit-number> -------------->go to previous commit stage in project.
+git checkout master -------------->go to latest commit stage in project.
+Branching is used for managing 2 history at same time.
+git diff -cached
+
+
+A--means stagged
+u---means untracked
+m---modified 
+
+
+we can check it weather git is initialized or not in our system with the help of git status command
+if git is initialized then we will get it status otherwise we will not get it.
+
+git log --graph --oneline
+
+git merge <branch_name>   //how to write commit msg in it.
+
+git branch -d <branch name>  // for deleting a branch.
+
+git stash   =====>>for making stash.
+
+git stash apply =======>for applying the changes.
+
+git remote -v  ========>>for seeing the remote version.
+
+rm -rf .git  ======>>for uninitializing of git.
+
+
+
+
+
+---------------always https-----------------
+git remote set-url origin https://github.com/Anupam0173/Restaurant_UI.git
+
+git push origin dev : devlopment
+
+pull is the shortcut of fetch and merge.
+
+
+
+
+
+
+
+
+
+*******************************How to access our token***********************************
+go to our reporsity>>click on profile>>setting>>developer setting>>personal access token>>Generate new token>>tick all boxes>>copy our token>> #$fal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tu34
+
+
+…or create a new repository on the command line
+echo "# Angular-assignment-mcq" >> README.md
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Anupam0173/Angular-assignment-mcq.git
+git push -u origin main
+
+
+
+
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/Anupam0173/Angular-assignment-mcq.git
+git branch -M main
+git push -u origin main
+
+
+
+…or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
