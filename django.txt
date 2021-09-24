@@ -2,14 +2,22 @@ sudo apt install python3
 
 sudo apt install python3-pip
 
-djangoenv is the name of our virtual env
-source djangoenv/bin/activate    --------------->Activation of virtualenv   //how to crate virtual envirnment in django by javatpoint
+
 
 pip install virtualenv    //for installing virtual env
 virtualenv <virtualenv_name>
 
 . <my_env_name>/bin/activate   //cmd for activating virtual envirnment
 . venv/bin/activate
+------------------------------vritual envirnmentinstalltion------------
+python3 -m venv  <virtual_envName>
+for activating new venv just open new terminal
+
+
+source djangoenv/bin/activate             //Activation of virtualenv   //how to crate virtual envirnment in django by javatpoint
+djangoenv is the name of our virtual env
+----------------------end of venv-------------
+
 
 python3   ---->for seeing the version 
 
@@ -140,6 +148,62 @@ INSTALLED_APPS = [
 for any doubt search ====>>making queries in django
 
 
-<i class="fa fa-shopping-cart">
+------------how to use mysql as a database------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Ecommerce',
+        'USER': 'root',
+        'PASSWORD': 'Sharma@123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 
+pip install pymysql
+Then, edit the __init__.py file in your project origin dir(the same as settings.py)
+
+add:
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
+------------------database connectivity end---------------
+
+
+----how to add custom field in User model/foreign key concept------------
+class employees(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)    //in db it will become user_id.
+    bio = models.TextField()
+    mobile = models.CharField(max_length=15)
+
+where user --->column will become user_id in employees table. and it is the foreign key which will point the primary key (id field of User) model.
+
+whenever we make OneToOneField,ForeignField(),ManyToManyField() this field will get created with the name of fieldname_id which is the froeign key which point to the primay key. if primary key is not specified then it will check for id field.
+---------------------------------------------------------------
+
+null vs blank
+null means it is representing the column of table which can cantain null value.
+blank means ti is represnting the form field which blank value is allowed.
+
+
+
+---------------------how to perform joins in django by using ORM  or related_name-----------------
+
+whenever we perform query then we get list so while printing we should iterate it.
+context['data'] = list(User.objects.filter(emp__bio='klsjfljdf')   ----> it gives User table data. where User is model name and emp is related_name attribute of django.
+
+context['data'] = list(User.objects.filter(employees__bio='klsjfljdf')  ----> it gives User table data. where User is model name and employees is Model name.
+
+
+---------------how to run our program at different port no----------------
+$ python manage.py runserver 4000    				//for executing our command at 4000 port no.
+python3 manage.py  runserver 0.0.0.0:8000			
+
+-------------meaning of def __str__(self):----------
+   def __str__(self):
+        return self.name
+for example this 2 lines is written inside the hotel model and when we add the products into the hotel then we will be able to hotel name.
+if we will not write def__str__(self). and if we will try to add products into hotel then in the dropdown we will be able to object(1) and object(2).

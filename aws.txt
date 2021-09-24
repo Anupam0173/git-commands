@@ -1,0 +1,103 @@
+create new envirnment -----------has been changed to ------------>create application
+https://www.geeksforgeeks.org/launching-an-application-on-aws-beanstalk/              //how to deploy our application on beanstack.
+
+https://www.geeksforgeeks.org/amazon-rds-creating-an-amazon-rds-db-instance/?ref=rp         //creating an amazon rds db instance.
+
+
+---------------------------------how to deploy django project on ec2 instance---------------------------
+https://www.programink.com/django-tutorial/django-deployment.html			django project deployment on aws Ec2.
+ https://www.youtube.com/watch?v=DNS6OcwcxV8				//the autor whom i follow to learn how to deploy django app on ec2.
+ https://www.youtube.com/watch?v=MJcnHRT7Ox0				//train with shubham
+
+ec2 dashboard >> launch instance >> Amazon Linux 2 AMI (HVM) **free tier** >> chosse instance type (free tier eligible) >> add storage (leave it as by default) >> add tags >> configure security group >>lunch (create new key pair) >> view instance.
+
+select instance>>
+in detail tab ---> ipv4 address.
+in security tab ----> security group >> inbound rule and outbound rule.
+
+------------------how to connect our local system by remote aws server----------------
+
+chmod 400 <file_name>
+ssh -i <file_name> ec2-user@<public ipv4 address>       			//connecting with server (syntax)
+ssh -i Djangoserverkey.pem ec2-user@54.152.151.193      			//connecting with server
+
+sudo yum install python3-devel mysql mysql-devel gcc
+sudo yum install python3-devel mysql mysql-devel gcc
+
+----------------How to connect with our rds database through ec2 instance m/c------------------
+mysql -u <username> -h <rds endpoint> -p
+mysql -u admin -h database-1.caosy0zy5jde.us-east-1.rds.amazonaws.com -p
+enter password 
+if we are getting error then edit inboud rule by following --->   https://www.youtube.com/watch?v=Ng_zi11N4_c&t=368s    at around 6:05:
+
+create database Restaurant;
+exit
+------------------------------rds database work End-----------------------
+
+----------------following commands need to executed on ec2 m/c------------
+python3 -m venv pydjangoenv/env
+cd pydjangoenv
+source env/bin/activate
+pip install django
+pip install mysqlclient
+
+sudo yum update
+
+        
+sudo yum install git -y			//installation of git on our ec2 machine.
+git clone <github url>				
+
+pip install -r requirements.txt		//for installing all the packages which is required to that program.
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py createsuperuser
+python3 manage.py  runserver 0.0.0.0:8000		//this will allow servers access using public ip address on port 8000
+for accessing our website <ec2 instance public ip address>:8000   
+eg-->http://54.14.23.139:8000
+eg-->http://54.14.23.139:8000/hotel/hview/
+
+
+
+-------------------------settings need to be done in seeting.py file before uploading of project on cloud-----------------
+DEBUG = False              //it should be false in production
+ALLOWED_HOSTS = ['*']       //or ALLOWED_HOSTS = ['*','localhost']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',					//type of database which we are using
+        'NAME': 'Restaurant',							//Name of database.
+        'USER': 'root',							//username of database
+        'PASSWORD': 'rootroot',
+        'HOST': 'database-1.<some value>.<region_name>.rds.amazonaws.com',   //'HOST': 'endpoint of rds database',
+        'PORT': '3306',							// specify port no from rds port no
+    }
+}
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,"static")    //we need to write this file for server being able to serve our static files.
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+python3 manage.py collectstatic					//for collecting all static files.
+python3 -m pip freeze > requirements.txt				//for generating requirements.txt file
+
+
+
+
+-----------in main project urls.py file-------------------
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls.static import static
+from . import settings
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('Blog.urls')),
+    path('froala_editor/', include('froala_editor.urls')),
+    path('my_task/', include('Todo.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+# In the production, django don't serve our files automatically so we have added above both lines so that django will be able to serve our files.
+---------------------end of urls.py file-------------------

@@ -47,7 +47,7 @@ git push origin dev : devlopment
 
 pull is the shortcut of fetch and merge.
 
-
+ctrl+x  //for coming out of git pull screen like vi editor.
 
 
 
