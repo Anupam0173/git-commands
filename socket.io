@@ -1,3 +1,5 @@
+this is the frist line.
+this is the second line.
 socket.emit("name of event","args for the call back function on socket.io")    //sending of msg
 
 socket.on("name of event",(message)=>{})
