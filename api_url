@@ -13,7 +13,7 @@ Post request:
 }
 
 
-delete request url
+delete request
 127.0.0.1:3000/api/contact/610fcaac026ca95010086bbc
 
 
